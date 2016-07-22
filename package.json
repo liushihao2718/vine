@@ -1,0 +1,16 @@
+{
+  "name": "vine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+  	"start":"watchify src/main.js -v -o public/js/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "watchify": "3.7.0"
+  }
+}
