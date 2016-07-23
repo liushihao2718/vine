@@ -1,4 +1,5 @@
-var s = Snap(800, 400),
+var Snap = require('snapsvg'),
+	s = Snap(800, 400),
 	FlowerProto = require('./ViewModel/FlowerProto.js'),
 	FlowerBuilder = require('./Entity/FlowerBuilder.js');
 

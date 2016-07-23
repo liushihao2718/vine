@@ -1,59 +1,85 @@
-var Snap = require('snapsvg');
-
-let parent;
 class FlowerProto {
 	//Position with x, y, rotate
 	//size circle r
 	constructor(entity, parent) {
-		this.position = entity.position;
 		this._parent = parent;
 		this.entity = entity;
 
-		let circle = this._createCircle( entity.position, entity.size);
-		let directLine = this._createLine( entity.position, entity.size);
-		this._createFlower( circle, directLine);
+		let circle = this._createCircle(),
+			directLine = this._createLine(),
+			pedicel = this._createPedicel();
+		this._groupComponents( circle, directLine, pedicel);
 	}
 
 	updatePostion(cx, cy) {
-		this.position.x = cx;
-		this.position.y = cy;
-
-		this.entity.position = this.position;
+		this.entity.position.x = cx;
+		this.entity.position.y = cy;
 	}
 //prefix '_' means private
-	_createCircle(position, size) {
-		let bigCircle = this._parent.circle(position.x,position.y,size);
+	_createCircle() {
+		let bigCircle = this._parent.circle(
+			this.entity.position.x,
+			this.entity.position.y,
+			this.entity.size);
 
 		bigCircle.attr({
 			fill: 'yellow',
-			stroke: "#000",
+			stroke: '#000',
 			strokeWidth: 5
 		});
 
 		return bigCircle;
 	}
 
-	_createLine(position, size) {
-		var directLine = this._parent.path("M"+position.x+" "+position.y+" h "+ 1.5*size);
+	_createLine() {
+		var directLine = this._parent.path(
+			'M'+this.entity.position.x+' '+this.entity.position.y
+			+' h '+ 1.5*this.entity.size);
 
 		directLine.attr({
 			stroke:'#000',
 			strokeWidth:5,
-			transform:rotate(position.rotation, position.x, position.y)
+			transform:rotate(this.entity.position.rotation, this.entity.position.x, this.entity.position.y)
 		});
 
 		return directLine;
 	}
 
-	_createFlower(circle, line) {
+	_createPedicel() {
+		const path = makePedicePath.call(this);
+		const pedicelPath = this._parent.path(path);
 
+		pedicelPath.attr({
+			stroke:'#000',
+			strokeWidth:5,
+			fill:'transparent'
+		});
+
+		return pedicelPath;
+		function makePedicePath() {
+
+			let Q = this.entity.pedicel.Q,
+				end = this.entity.pedicel.end,
+				cx = this.entity.position.x,
+				cy = this.entity.position.y;
+
+			return `M${cx} ${cy} Q${Q.x} ${Q.y} ${end.x} ${end.y}`;
+		}
+	}
+	_groupComponents(circle, directLine, pedicel ) {
+
+		var flower = this._parent.group(circle, directLine, pedicel);
+		this._drag(flower);
+	}
+
+	_drag(el) {
 		const self = this;
-		var flower = self._parent.group(circle, line);
-		flower.drag(move, start, stop);
+
+		el.drag(move, start, stop);
 
 		function move(dx,dy) {
 			this.attr({
-					transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, dy]
+				'transform': this.data('origTransform') + (this.data('origTransform') ? 'T' : 't') + [dx, dy]
 			});
 		}
 
@@ -67,7 +93,6 @@ class FlowerProto {
 				cx = matrix.x(old_x, old_y),
 				cy = matrix.y(old_x, old_y);
 			self.updatePostion(cx, cy);
-			console.log('pedicel: '+JSON.stringify( self.entity.pedicel ));
 		}
 	}
 }

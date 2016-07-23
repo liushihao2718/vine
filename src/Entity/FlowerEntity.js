@@ -7,15 +7,16 @@ class FlowerEntity {
 
 	get pedicel() {
 
-		const self = this;
+		const self = this,
+		sign = getSign(self.position.rotation);
 		return {
 			Q:{
-				x : self.position.x + Math.tan(self.position.rotation) * self.size,
-				y : self.position.y + self.size
+				x : self.position.x + (sign* -1)*Math.tan(self.position.rotation) * self.size,
+				y : self.position.y + (sign* -1) * self.size
 			},
 			end:{
 				x : self.position.x,
-				y : self.position.y + (getSign(self.position.rotation) * -1) * self.size
+				y : self.position.y + (sign* -1) * 2 * self.size
 			}
 		}
 

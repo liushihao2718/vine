@@ -5,15 +5,15 @@
 			"y":150,
 			"rotation":60
 		},
-		"size" : 80
+		"size" : 40
 	},
 	{
 		"position" : {
 			"x":550,
 			"y":200,
-			"rotation":120
+			"rotation":-120
 		},
-		"size" : 80
+		"size" : 40
 	}
 ]
  
