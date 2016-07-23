@@ -1,0 +1,19 @@
+[
+	{
+		"position" : {
+			"x":150,
+			"y":150,
+			"rotation":60
+		},
+		"size" : 80
+	},
+	{
+		"position" : {
+			"x":550,
+			"y":350,
+			"rotation":120
+		},
+		"size" : 80
+	}
+]
+ 

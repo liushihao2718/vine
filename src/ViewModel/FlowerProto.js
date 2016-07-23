@@ -4,15 +4,20 @@ let parent;
 class FlowerProto {
 	//Position with x, y, rotate
 	//size circle r
-	constructor(position, size, parent) {
-		this.position = position;
+	constructor(entity, parent) {
+		this.position = entity.position;
 		this._parent = parent;
 
-		let circle = this._createCircle( position, size);
-		let directLine = this._createLine( position, size);
+		let circle = this._createCircle( entity.position, entity.size);
+		let directLine = this._createLine( entity.position, entity.size);
 		this._createFlower( circle, directLine);
 	}
 
+	updatePostion(cx, cy) {
+		this.position.x = cx;
+		this.position.y = cy;
+	}
+//prefix '_' means private
 	_createCircle(position, size) {
 		let bigCircle = this._parent.circle(position.x,position.y,size);
 
@@ -31,18 +36,16 @@ class FlowerProto {
 		directLine.attr({
 			stroke:'#000',
 			strokeWidth:5,
-			transform:rotate(-60, position.x, position.y)
+			transform:rotate(position.rotation, position.x, position.y)
 		});
 
 		return directLine;
 	}
 
-	
-
 	_createFlower(circle, line) {
 
 		const self = this;
-		var flower = this._parent.group(circle, line);
+		var flower = self._parent.group(circle, line);
 		flower.drag(move, start, stop);
 
 		function move(dx,dy) {
@@ -63,11 +66,6 @@ class FlowerProto {
 			self.updatePostion(cx, cy);
 			console.log('position: '+JSON.stringify( self.position));
 		}
-	}
-
-	updatePostion(cx, cy) {
-		this.position.x = cx;
-		this.position.y = cy;
 	}
 }
 module.exports = FlowerProto;
