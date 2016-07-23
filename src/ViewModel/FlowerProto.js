@@ -7,6 +7,7 @@ class FlowerProto {
 	constructor(entity, parent) {
 		this.position = entity.position;
 		this._parent = parent;
+		this.entity = entity;
 
 		let circle = this._createCircle( entity.position, entity.size);
 		let directLine = this._createLine( entity.position, entity.size);
@@ -16,6 +17,8 @@ class FlowerProto {
 	updatePostion(cx, cy) {
 		this.position.x = cx;
 		this.position.y = cy;
+
+		this.entity.position = this.position;
 	}
 //prefix '_' means private
 	_createCircle(position, size) {
@@ -64,7 +67,7 @@ class FlowerProto {
 				cx = matrix.x(old_x, old_y),
 				cy = matrix.y(old_x, old_y);
 			self.updatePostion(cx, cy);
-			console.log('position: '+JSON.stringify( self.position));
+			console.log('pedicel: '+JSON.stringify( self.entity.pedicel ));
 		}
 	}
 }
