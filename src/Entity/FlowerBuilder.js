@@ -1,33 +1,38 @@
-const FlowerEntity = require('./FlowerEntity.js');
+let FlowerEntity = require('./FlowerEntity.js');
 
 var FlowerBuilder = {
-	readFromJSON : readFromJSON,
 	readWithAjax : readWithAjax
 };
 module.exports = FlowerBuilder;
 
 let outCallback;
 
-function ajaxSuccess(argument) {
-	readFromJSON(this.responseText, outCallback);
-}
-
 function readWithAjax(filePath, callback) {
 	outCallback = callback;
 	sendRequest(ajaxSuccess);
 }
 
+function sendRequest(callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'flower.json');
+	xhr.send();
 
+	xhr.onload = callback;
+}
+
+function ajaxSuccess() {
+	readFromJSON(this.responseText, outCallback);
+}
 
 function readFromJSON(text, callback) {
 	var jsonArray = JSON.parse(text);
 
 	let flowers = [];
 
-
-	jsonArray.forEach( (obj)=>{
-		flowers.push( makeFlower(obj) );
-	});
+	for (var i = 0; i < jsonArray.length; i++) {
+		let flower = makeFlower( jsonArray[i] );
+		flowers.push(flower);
+	}
 
 	callback(flowers);
 }
@@ -43,10 +48,3 @@ function makeFlower(obj) {
 	}
 }
 
-function sendRequest(callback) {
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'flower.json');
-	xhr.send();
-
-	xhr.onload = callback;
-}

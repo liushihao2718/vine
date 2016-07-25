@@ -46,8 +46,7 @@ class FlowerProto {
 	}
 
 	_createPedicel() {
-		const path = makePedicePath.call(this);
-		const pedicelPath = this._parent.path(path);
+		let pedicelPath = this._parent.path(this.entity.pathString);
 
 		pedicelPath.attr({
 			stroke:'#000',
@@ -56,15 +55,7 @@ class FlowerProto {
 		});
 
 		return pedicelPath;
-		function makePedicePath() {
-
-			let Q = this.entity.pedicel.Q,
-				end = this.entity.pedicel.end,
-				cx = this.entity.position.x,
-				cy = this.entity.position.y;
-
-			return `M${cx} ${cy} Q${Q.x} ${Q.y} ${end.x} ${end.y}`;
-		}
+		
 	}
 	_groupComponents(circle, directLine, pedicel ) {
 
