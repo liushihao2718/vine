@@ -1,8 +1,9 @@
-let FlowerEntity = require('./FlowerEntity.js');
+let FlowerEntity = require('./FlowerEntity.js'),
+	math = require('mathjs');
 
 var FlowerBuilder = {
 	buildWithArray : buildWithArray,
-	startPoint :startPoint,
+	startEntity :startEntity,
 	target : undefined
 };
 module.exports = FlowerBuilder;
@@ -36,10 +37,10 @@ function makeFlower(obj) {
 		return new FlowerEntity(obj.position, obj.size);
 	}
 }
-function startPoint(){
+function startEntity(){
 	let startPointPosition ={
-		x: FlowerBuilder.target.width,
-		y: FlowerBuilder.target.height,
+		x: math.number(FlowerBuilder.target.attr().width),
+		y: math.number(FlowerBuilder.target.attr().height),
 		rotation: -90
 	};
 
