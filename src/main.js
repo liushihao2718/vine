@@ -39,6 +39,9 @@ function setFlowers(flowers, parent) {
 
 
 UI.onSetVine = function(){
+	flowerProtos.sort((a, b)=>{
+		return (a.entity.position.x < b.entity.position.x) ? 1 : -1;
+	});
 	cleanVine();
 	setVines(flowerProtos, svg);
 };
