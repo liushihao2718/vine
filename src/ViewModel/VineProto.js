@@ -7,7 +7,7 @@ class VineProto {
 		this.parent = parent;
 		this.entity = vineEntity;
 
-		this._createPath();
+		this.svg = this._createPath();
 	}
 
 	_checkArgument(vineEntity) {
@@ -23,8 +23,11 @@ class VineProto {
 			strokeWidth:5,
 			fill:'transparent'
 		});
-
 		return svg;
+	}
+
+	remove(){
+		this.svg.remove();
 	}
 }
 

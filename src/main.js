@@ -4,7 +4,8 @@ var Snap = require('snapsvg'),
 	FlowerBuilder = require('./Entity/FlowerBuilder.js'),
 	Vine = require('./Entity/Vine.js'),
 	VineProto = require('./ViewModel/VineProto'),
-	VineBuilder = require('./Entity/VineBuilder.js');
+	VineBuilder = require('./Entity/VineBuilder.js'),
+	UI = require('./ViewModel/UI.js');
 
 svg.attr({
 	style:'background-color:lightgray'
@@ -21,7 +22,6 @@ readFile(function(){
 	let jsonArray = JSON.parse( this.responseText );
 	let flowers = FlowerBuilder.buildWithArray(jsonArray);
 	setFlowers(flowers, svg);
-	setVines(flowerProtos, svg);
 
 });
 function readFile(callback) {
@@ -37,6 +37,24 @@ function setFlowers(flowers, parent) {
 	}
 }
 
+
+UI.onSetVine = function(){
+	cleanVine();
+	setVines(flowerProtos, svg);
+};
+UI.setVineButton();
+
+
+function cleanVine() {
+	vines.forEach((x)=>{
+		x.remove();
+	});
+
+	while(vines.length > 0) {
+		let vine = vines.pop();
+		vine.remove;
+	}
+}
 function setVines(flowerProtos, parent) {
 	if(flowerProtos.length === 0 || parent === undefined) return;
 	
