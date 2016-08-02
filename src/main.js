@@ -61,27 +61,23 @@ function cleanVine() {
 function setVines(flowerProtos, parent) {
 	if(flowerProtos.length === 0 || parent === undefined) return;
 	
-	let startVine = makeStartVine();
-	let vineProto = new VineProto(startVine, parent);
-	vines.push(vineProto); 
+	makeStartVine(parent);
 
 	for (var i = 0; i < flowerProtos.length-1; i++) {
-		let vine = makeVine( flowerProtos[i].entity, flowerProtos[i+1].entity );
-		let vineProto = new VineProto(vine, parent);
-		vines.push(vineProto);
+		makeVine( flowerProtos[i].entity, flowerProtos[i+1].entity, parent);
 	}
 }
 
-function makeStartVine() {
+function makeStartVine(parent) {
 	let startEntity = FlowerBuilder.startEntity();
-	let startVine = new Vine( startEntity, flowerProtos[0].entity );
-	startVine.pathString = VineBuilder.makeStartVine(startEntity, flowerProtos[0].entity);
-
-	return startVine;
+	makeVine( startEntity, flowerProtos[0].entity, parent);
 }
 
-function makeVine(entity1, entity2) {
+function makeVine(entity1, entity2, parent) {
+	if(entity1 === undefined || entity2 === undefined || parent === undefined) return;
+
 	let vine = new Vine(entity1, entity2);
 	vine.pathString = VineBuilder.makeVine(entity1, entity2);
-	return vine;
+	let vineProto = new VineProto(vine, parent);
+	vines.push(vineProto); 
 }

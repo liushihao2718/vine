@@ -3,7 +3,7 @@
 		"position" : {
 			"x":150,
 			"y":150,
-			"rotation":120
+			"rotation":-45
 		},
 		"size" : 40
 	},
@@ -11,9 +11,17 @@
 		"position" : {
 			"x":550,
 			"y":200,
-			"rotation":-120
+			"rotation":-45
 		},
 		"size" : 40
+	},
+	{
+		"position" : {
+			"x":350,
+			"y":200,
+			"rotation":120
+		},
+		"size" : 20
 	}
 ]
  
