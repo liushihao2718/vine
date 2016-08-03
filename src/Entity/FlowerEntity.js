@@ -11,8 +11,10 @@ class FlowerEntity {
 			sign = getSign(self.position.rotation);
 		return {
 			Q:{
-				x : self.position.x + (sign* -1)*Math.tan(self.position.rotation) * self.size,
-				y : self.position.y + (sign* -1) * self.size
+				// x : self.position.x + (sign* -1)*Math.tan(self.position.rotation) * self.size,
+				// y : self.position.y + (sign* -1) * self.size
+				x : self.position.x + (sign* -1)*Math.sin(self.position.rotation) * self.size,
+				y : self.position.y + (sign* -1) *Math.cos(self.position.rotation) * 2*self.size
 			},
 			end:{
 				x : self.position.x,

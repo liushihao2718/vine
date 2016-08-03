@@ -40,7 +40,7 @@ function makeFlower(obj) {
 function startEntity(){
 	let startPointPosition ={
 		x: math.number(FlowerBuilder.target.attr().width),
-		y: math.number(FlowerBuilder.target.attr().height),
+		y: math.number(FlowerBuilder.target.attr().height*0.8),
 		rotation: -90
 	};
 

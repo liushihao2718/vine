@@ -44,6 +44,8 @@ UI.onSetVine = function(){
 	});
 	cleanVine();
 	setVines(flowerProtos, svg);
+
+	debug_printQE();
 };
 UI.setVineButton();
 
@@ -59,7 +61,6 @@ function cleanVine() {
 	}
 }
 function setVines(flowerProtos, parent) {
-	if(flowerProtos.length === 0 || parent === undefined) return;
 	
 	makeStartVine(parent);
 
@@ -74,10 +75,23 @@ function makeStartVine(parent) {
 }
 
 function makeVine(entity1, entity2, parent) {
-	if(entity1 === undefined || entity2 === undefined || parent === undefined) return;
 
 	let vine = new Vine(entity1, entity2);
 	vine.pathString = VineBuilder.makeVine(entity1, entity2);
 	let vineProto = new VineProto(vine, parent);
 	vines.push(vineProto); 
+}
+
+function debug_printQE(){
+	flowerProtos.forEach(function(f){
+		let Q = svg.circle(f.entity.pedicel.Q.x,f.entity.pedicel.Q.y, 5);
+		Q.attr({
+			fill:'red'
+		});
+
+		let E = svg.circle(f.entity.pedicel.end.x,f.entity.pedicel.end.y, 5);
+		E.attr({
+			fill:'blue'
+		});
+	});
 }
