@@ -82,7 +82,14 @@ function makeVine(entity1, entity2, parent) {
 	vines.push(vineProto); 
 }
 
+let potints = [];
+
 function debug_printQE(){
+	while(potints.length > 0) {
+		let p = potints.pop();
+		p.remove();
+	}
+
 	flowerProtos.forEach(function(f){
 		let Q = svg.circle(f.entity.pedicel.Q.x,f.entity.pedicel.Q.y, 5);
 		Q.attr({
@@ -93,5 +100,7 @@ function debug_printQE(){
 		E.attr({
 			fill:'blue'
 		});
+		potints.push(Q);
+		potints.push(E);
 	});
 }
